@@ -1,0 +1,217 @@
+﻿
+<UserControl
+    x:Class="LuxuryCarRental.Views.CheckoutView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    mc:Ignorable="d"
+    d:DesignHeight="600"
+    d:DesignWidth="900"
+    Background="{StaticResource LightBackgroundBrush}"
+    >
+
+    <UserControl.Resources>
+        <Style x:Key="ShowWhenPlaceholder" TargetType="StackPanel">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedSavedCard.Id}" Value="-1">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ShowCheckBoxWhenPlaceholder" TargetType="CheckBox">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedSavedCard.Id}" Value="-1">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Text="Checkout"
+            Style="{StaticResource HeaderText}"
+            Margin="0,0,0,16" />
+
+        <Border
+            Grid.Row="1"
+            Style="{StaticResource CardPanel}"
+            Background="{StaticResource CardBackgroundBrush}"
+            CornerRadius="8"
+            Padding="{StaticResource ContentPadding}">
+
+            <DockPanel LastChildFill="True">
+                <ScrollViewer
+                    DockPanel.Dock="Top"
+                    VerticalScrollBarVisibility="Auto"
+                    HorizontalScrollBarVisibility="Disabled"
+                    Margin="0,0,0,8">
+
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                            <TextBlock Text="Start Date:" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <DatePicker
+                                SelectedDate="{Binding StartDate, Mode=TwoWay}"
+                                DisplayDateStart="{x:Static sys:DateTime.Today}"
+                                Width="120"
+                                Margin="0,0,16,0"/>
+
+                            <TextBlock Text="End Date:" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <DatePicker
+                                SelectedDate="{Binding EndDate, Mode=TwoWay}"
+                                DisplayDateStart="{Binding StartDate}"
+                                Width="120"
+                                Margin="0,0,16,0"/>
+
+                            <TextBlock Text="Duration:" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <TextBlock
+                                Text="{Binding DurationDays, StringFormat='{}{0} days'}"
+                                VerticalAlignment="Center" />
+                        </StackPanel>
+
+                        <DataGrid
+                            ItemsSource="{Binding CartItems}"
+                            AutoGenerateColumns="False"
+                            CanUserAddRows="False"
+                            IsReadOnly="True"
+                            RowHeight="30"
+                            HeadersVisibility="Column"
+                            ColumnHeaderStyle="{StaticResource CartDataGridHeaderStyle}"
+                            Margin="0,0,0,16">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                    Header="Vehicle"
+                                    Binding="{Binding Vehicle.VehicleType}"
+                                    Width="*" />
+
+                                <DataGridTextColumn
+                                    Header="Model"
+                                    Binding="{Binding Vehicle.Name}"
+                                    Width="*" />
+
+                                <DataGridTextColumn
+                                    Header="Start"
+                                    Binding="{Binding StartDate, StringFormat=d}"
+                                    Width="Auto" />
+
+                                <DataGridTextColumn
+                                    Header="End"
+                                    Binding="{Binding EndDate, StringFormat=d}"
+                                    Width="Auto" />
+
+                                <DataGridTextColumn
+                                    Header="Daily Rate"
+                                    Binding="{Binding Subtotal.Amount, StringFormat=C}"
+                                    Width="Auto" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <TextBlock
+                            Text="Payment Information"
+                            Style="{StaticResource SectionTitleText}"
+                            Margin="0,0,0,8" />
+
+                        <StackPanel Orientation="Vertical" Margin="0,0,0,8">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <TextBlock Text="Use Saved Card:" VerticalAlignment="Center"/>
+                                <ComboBox
+                                    ItemsSource="{Binding SavedCards}"
+                                    SelectedItem="{Binding SelectedSavedCard, Mode=TwoWay}"
+                                    IsSynchronizedWithCurrentItem="False"
+                                    Width="220"
+                                    Margin="8,0,0,0">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock>
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Text" Value="{Binding Nickname}"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Id}" Value="-1">
+                                                                <Setter Property="Text" Value="(Use a new card)"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <TextBlock
+                                    Text="(optional)"
+                                    VerticalAlignment="Center"
+                                    FontStyle="Italic"
+                                    Foreground="Gray"
+                                    Margin="8,0,0,0"/>
+                            </StackPanel>
+
+                            <CheckBox
+                                Content="Remember this card"
+                                IsChecked="{Binding RememberCard, Mode=TwoWay}"
+                                Style="{StaticResource ShowCheckBoxWhenPlaceholder}"
+                                Margin="0,0,0,8"/>
+
+                            <StackPanel
+                                Style="{StaticResource ShowWhenPlaceholder}"
+                                Margin="0,0,0,8">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                    <TextBlock Text="Card #:" VerticalAlignment="Center" Width="80"/>
+                                    <TextBox
+                                        Width="180"
+                                        Text="{Binding CardNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                    <TextBlock Text="Expiry (MM/YY):" VerticalAlignment="Center" Width="80"/>
+                                    <TextBox
+                                        Width="80"
+                                        Text="{Binding Expiry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="CVV:" VerticalAlignment="Center" Width="80"/>
+                                    <TextBox
+                                        Width="60"
+                                        Text="{Binding Cvv, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <StackPanel
+                    DockPanel.Dock="Bottom"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,8,0,0">
+
+                    <Button
+                        Content="← Back to Cart"
+                        Command="{Binding BackToCartCommand}"
+                        Style="{StaticResource SecondaryButton}"
+                        Width="140"
+                        Height="36"
+                        Margin="0,0,8,0"/>
+
+                    <Button
+                        Content="Confirm &amp; Pay"
+                        Command="{Binding PayCommand}"
+                        Style="{StaticResource PrimaryButton}"
+                        Width="140"
+                        Height="36"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,116 @@
+﻿
+<UserControl
+    x:Class="LuxuryCarRental.Views.ConfirmationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:models="clr-namespace:LuxuryCarRental.Models"
+    xmlns:vm="clr-namespace:LuxuryCarRental.ViewModels"
+    Background="{StaticResource LightBackgroundBrush}"
+    Margin="0">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Text="Confirm Your Rental"
+            Style="{StaticResource HeaderText}"
+            Margin="0,0,0,16" />
+
+        <Border
+            Grid.Row="1"
+            Style="{StaticResource CardPanel}"
+            Background="{StaticResource CardBackgroundBrush}"
+            CornerRadius="8"
+            Padding="{StaticResource ContentPadding}">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"   />
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <ItemsControl
+                    Grid.Row="0"
+                    ItemsSource="{Binding Items}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type models:CartItem}">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <TextBlock
+                                    Text="{Binding Vehicle.VehicleType}"
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Foreground="{StaticResource PrimaryBrush}" />
+                                <TextBlock Text="  " FontSize="16"/>
+                                <TextBlock
+                                    Text="{Binding Vehicle.Name}"
+                                    FontSize="16"
+                                    Foreground="{StaticResource PrimaryBrush}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <TextBlock
+                    Grid.Row="1"
+                    Text="{Binding Total.Amount, StringFormat='Total: {0:C}'}"
+                    FontSize="18"
+                    FontWeight="SemiBold"
+                    Foreground="{StaticResource PrimaryBrush}"
+                    Margin="0,8,0,16" />
+
+                <TextBlock
+                    Grid.Row="2"
+                    Text="Card:"
+                    FontSize="16"
+                    FontWeight="SemiBold"
+                    Foreground="{StaticResource PrimaryBrush}"
+                    Margin="0,0,0,8" />
+
+                <StackPanel Grid.Row="3" Orientation="Vertical" Margin="0,0,0,16">
+                    <TextBlock
+                        Text="{Binding PaymentCard.CardNumber, StringFormat='Number: {0}'}"
+                        FontSize="15"
+                        Foreground="{StaticResource PrimaryBrush}"
+                        Margin="0,0,0,4" />
+                    <TextBlock 
+                        FontSize="15" 
+                        Foreground="{StaticResource PrimaryBrush}">
+                        <Run Text="{Binding PaymentCard.ExpiryMonth}" />
+                        <Run Text="/" />
+                        <Run Text="{Binding PaymentCard.ExpiryYear}" />
+                    </TextBlock>
+                </StackPanel>
+
+                <Grid Grid.Row="4" />
+
+                <StackPanel
+                    Grid.Row="5"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,16,0,0">
+                    <Button
+                        Content="← Back to Cart"
+                        Command="{Binding BackToCartCommand}"
+                        Style="{StaticResource SecondaryButton}"
+                        Width="140"
+                        Height="36"
+                        Margin="0,0,8,0" />
+                    <Button
+                        Content="Confirm"
+                        Command="{Binding ConfirmCommand}"
+                        Style="{StaticResource PrimaryButton}"
+                        Width="120"
+                        Height="36" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

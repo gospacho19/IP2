@@ -1,0 +1,291 @@
+﻿<UserControl 
+    x:Class="LuxuryCarRental.Views.CatalogView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="clr-namespace:LuxuryCarRental.ViewModels"
+    Background="{StaticResource LightBackgroundBrush}">
+
+    <ScrollViewer 
+      VerticalScrollBarVisibility="Auto"
+      HorizontalScrollBarVisibility="Disabled">
+
+        <StackPanel Margin="{StaticResource ContentPadding}">
+
+            <!-- CARS SECTION -->
+            <Border Style="{StaticResource CardPanel}" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+
+                        <RowDefinition Height="230"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+      Grid.Row="0"
+      Text="Cars"
+      Style="{StaticResource SectionTitleText}"
+      Margin="0,0,0,8" />
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button
+        Grid.Column="0"
+        Content="◀"
+        Width="32"
+        Height="32"
+        Style="{StaticResource SecondaryButton}"
+        Click="OnCarsScrollLeft"
+        VerticalAlignment="Center"
+        Margin="4,0,0,0"
+        Background="#80FFFFFF"
+        ToolTip="Scroll left" />
+
+                        <ScrollViewer
+        Grid.Column="1"
+        x:Name="CarsScrollViewer"
+        HorizontalScrollBarVisibility="Hidden"
+        VerticalScrollBarVisibility="Disabled"
+        PreviewMouseWheel="Carousel_PreviewMouseWheel"
+        Margin="4,0">
+
+                            <ItemsControl
+          ItemsSource="{Binding Cars}"
+          ItemTemplate="{StaticResource VehicleCard_CatalogTemplate}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ScrollViewer>
+
+                        <Button
+        Grid.Column="2"
+        Content="▶"
+        Width="32"
+        Height="32"
+        Style="{StaticResource SecondaryButton}"
+        Click="OnCarsScrollRight"
+        VerticalAlignment="Center"
+        Margin="0,0,4,0"
+        Background="#80FFFFFF"
+        ToolTip="Scroll right" />
+                    </Grid>
+                </Grid>
+            </Border>
+
+
+            <!-- LUXURY CARS SECTION -->
+
+            <Border Style="{StaticResource CardPanel}" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="230"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+      Grid.Row="0"
+      Text="Luxury Cars"
+      Style="{StaticResource SectionTitleText}"
+      Margin="0,0,0,8" />
+
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button
+        Grid.Column="0"
+        Content="◀"
+        Width="32"
+        Height="32"
+        Style="{StaticResource SecondaryButton}"
+        Click="OnLuxuryScrollLeft"
+        VerticalAlignment="Center"
+        Margin="4,0,0,0"
+        Background="#80FFFFFF"
+        ToolTip="Scroll left" />
+
+                        <ScrollViewer
+        Grid.Column="1"
+        x:Name="LuxuryScrollViewer"
+        HorizontalScrollBarVisibility="Hidden"
+        VerticalScrollBarVisibility="Disabled"
+        PreviewMouseWheel="Carousel_PreviewMouseWheel"
+        Margin="4,0">
+                            <ItemsControl
+          ItemsSource="{Binding LuxuryCars}"
+          ItemTemplate="{StaticResource VehicleCard_CatalogTemplate}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ScrollViewer>
+
+                        <Button
+        Grid.Column="2"
+        Content="▶"
+        Width="32"
+        Height="32"
+        Style="{StaticResource SecondaryButton}"
+        Click="OnLuxuryScrollRight"
+        VerticalAlignment="Center"
+        Margin="0,0,4,0"
+        Background="#80FFFFFF"
+        ToolTip="Scroll right" />
+                    </Grid>
+                </Grid>
+            </Border>
+
+
+            <!-- MOTORCYCLES SECTION -->
+
+            <Border Style="{StaticResource CardPanel}" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="230"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+      Grid.Row="0"
+      Text="Motorcycles"
+      Style="{StaticResource SectionTitleText}"
+      Margin="0,0,0,8" />
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button
+        Grid.Column="0"
+        Content="◀"
+        Width="32"
+        Height="32"
+        Style="{StaticResource SecondaryButton}"
+        Click="OnMotorcycleScrollLeft"
+        VerticalAlignment="Center"
+        Margin="4,0,0,0"
+        Background="#80FFFFFF"
+        ToolTip="Scroll left" />
+
+                        <ScrollViewer
+        Grid.Column="1"
+        x:Name="MotorcycleScrollViewer"
+        HorizontalScrollBarVisibility="Hidden"
+        VerticalScrollBarVisibility="Disabled"
+        PreviewMouseWheel="Carousel_PreviewMouseWheel"
+        Margin="4,0">
+                            <ItemsControl
+          ItemsSource="{Binding Motorcycles}"
+          ItemTemplate="{StaticResource VehicleCard_CatalogTemplate}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ScrollViewer>
+
+                        <Button
+        Grid.Column="2"
+        Content="▶"
+        Width="32"
+        Height="32"
+        Style="{StaticResource SecondaryButton}"
+        Click="OnMotorcycleScrollRight"
+        VerticalAlignment="Center"
+        Margin="0,0,4,0"
+        Background="#80FFFFFF"
+        ToolTip="Scroll right" />
+                    </Grid>
+                </Grid>
+            </Border>
+
+
+            <!-- YACHTS SECTION -->
+            <Border Style="{StaticResource CardPanel}" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="230"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Title -->
+                    <TextBlock
+      Grid.Row="0"
+      Text="Yachts"
+      Style="{StaticResource SectionTitleText}"
+      Margin="0,0,0,8" />
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button
+        Grid.Column="0"
+        Content="◀"
+        Width="32"
+        Height="32"
+        Style="{StaticResource SecondaryButton}"
+        Click="OnYachtScrollLeft"
+        VerticalAlignment="Center"
+        Margin="4,0,0,0"
+        Background="#80FFFFFF"
+        ToolTip="Scroll left" />
+
+                        <!-- Carousel -->
+                        <ScrollViewer
+        Grid.Column="1"
+        x:Name="YachtScrollViewer"
+        HorizontalScrollBarVisibility="Hidden"
+        VerticalScrollBarVisibility="Disabled"
+        PreviewMouseWheel="Carousel_PreviewMouseWheel"
+        Margin="4,0">
+                            <ItemsControl
+          ItemsSource="{Binding Yachts}"
+          ItemTemplate="{StaticResource VehicleCard_CatalogTemplate}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ScrollViewer>
+
+                        <Button
+        Grid.Column="2"
+        Content="▶"
+        Width="32"
+        Height="32"
+        Style="{StaticResource SecondaryButton}"
+        Click="OnYachtScrollRight"
+        VerticalAlignment="Center"
+        Margin="0,0,4,0"
+        Background="#80FFFFFF"
+        ToolTip="Scroll right" />
+                    </Grid>
+                </Grid>
+            </Border>
+
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
